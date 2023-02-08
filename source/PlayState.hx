@@ -4791,8 +4791,8 @@ class PlayState extends MusicBeatState
 
 		setOnLuas('curBeat', curBeat);
 		callOnLuas('onBeatHit', []);
+		}
 	}
-
 	override function sectionHit()
 	{
 		super.sectionHit();
