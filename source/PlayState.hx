@@ -4944,7 +4944,7 @@ class PlayState extends MusicBeatState
 				}
 			}
 
-			Rating FC
+			//Rating FC
 			ratingFC = "";
 			if (sicks > 0) ratingFC = "SFC";
 			if (goods > 0) ratingFC = "GFC";
