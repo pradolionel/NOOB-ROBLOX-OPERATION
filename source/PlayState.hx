@@ -284,7 +284,7 @@ class PlayState extends MusicBeatState
 	var scoreTxtTween:FlxTween;
 
 	public static var campaignScore:Int = 0;
-	public static var campaignMisses:Int = 0;
+	//public static var campaignMisses:Int = 0;
 	public static var seenCutscene:Bool = false;
 	public static var deathCounter:Int = 0;
 
@@ -2078,12 +2078,12 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	/*public function updateScore(miss:Bool = false)
+	public function updateScore(miss:Bool = false)
 	{
 		scoreTxt.text = 'Score: ' + songScore
 		+ ' | Misses: ' + songMisses
 		+ ' | Rating: ' + ratingName
-		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');*/
+		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
 
 		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
 		{
@@ -3582,7 +3582,7 @@ class PlayState extends MusicBeatState
 			if (isStoryMode)
 			{
 				campaignScore += songScore;
-				//campaignMisses += songMisses;
+				campaignMisses += songMisses;
 
 				storyPlaylist.remove(storyPlaylist[0]);
 
@@ -4146,7 +4146,7 @@ class PlayState extends MusicBeatState
 
 		//For testing purposes
 		//trace(daNote.missHealth);
-		//songMisses++;
+		songMisses++;
 		vocals.volume = 0;
 		if(!practiceMode) songScore -= 10;
 
@@ -4188,7 +4188,7 @@ class PlayState extends MusicBeatState
 
 			if(!practiceMode) songScore -= 10;
 			if(!endingSong) {
-				//songMisses++;
+				songMisses++;
 			}
 			totalPlayed++;
 			RecalculateRating(true);
@@ -4944,7 +4944,7 @@ class PlayState extends MusicBeatState
 				}
 			}
 
-			/* Rating FC
+			Rating FC
 			ratingFC = "";
 			if (sicks > 0) ratingFC = "SFC";
 			if (goods > 0) ratingFC = "GFC";
@@ -4956,7 +4956,7 @@ class PlayState extends MusicBeatState
 		setOnLuas('rating', ratingPercent);
 		setOnLuas('ratingName', ratingName);
 		setOnLuas('ratingFC', ratingFC);
-	}*/
+	}
 
 	#if ACHIEVEMENTS_ALLOWED
 	private function checkForAchievement(achievesToCheck:Array<String> = null):String
@@ -4971,10 +4971,10 @@ class PlayState extends MusicBeatState
 				
 				if (achievementName.contains(WeekData.getWeekFileName()) && achievementName.endsWith('nomiss')) // any FC achievements, name should be "weekFileName_nomiss", e.g: "weekd_nomiss";
 				{
-					/*if(isStoryMode && campaignMisses + songMisses < 1 && CoolUtil.difficultyString() == 'HARD'
+					if(isStoryMode && campaignMisses + songMisses < 1 && CoolUtil.difficultyString() == 'HARD'
 						&& storyPlaylist.length <= 1 && !changedDifficulty && !usedPractice)
 						unlock = true;
-				}*/
+				}
 				switch(achievementName)
 				{
 					case 'ur_bad':
