@@ -135,7 +135,6 @@ class PlayState extends MusicBeatState
 	public var noteKillOffset:Float = 350;
 
 	public var playbackRate(default, set):Float = 1;
-	var kadeEngineWatermark:FlxText;
 
 	public var boyfriendGroup:FlxSpriteGroup;
 	public var dadGroup:FlxSpriteGroup;
@@ -187,6 +186,7 @@ class PlayState extends MusicBeatState
 	private var healthBarBG:AttachedSprite;
 	public var healthBar:FlxBar;
 	var songPercent:Float = 0;
+	var kadeEngineWatermark:FlxText;
 
 	private var timeBarBG:AttachedSprite;
 	public var timeBar:FlxBar;
@@ -934,7 +934,7 @@ class PlayState extends MusicBeatState
 		healthBarBG.sprTracker = healthBar;
 
 		// Add Kade Engine watermark
-		kadeEngineWatermark = new FlxText(4,healthBarBG.y + 50,0,SONG.song + " - " + (storyDifficulty == 2 ? "Hard" : storyDifficulty == 1 ? "Normal" : "Easy") + (Main.watermarks ? " | KE " + MainMenuState.psychEngineVersion : ""), 16);
+		kadeEngineWatermark = new FlxText(4,healthBarBG.y + 50,0,SONG.song + " - " + (storyDifficulty == 2 ? "Hard" : storyDifficulty == 1 ? "Normal" : "Easy") + (Main.watermarks ? " | KE " + MainMenuState.kadeEngineVer : ""), 16);
 		kadeEngineWatermark.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		kadeEngineWatermark.scrollFactor.set();
 		add(kadeEngineWatermark);
@@ -985,6 +985,7 @@ class PlayState extends MusicBeatState
 		timeBarBG.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
+		kadeEngineWatermark.cameras = [camHUD];
 		
 		#if mobile
 		addMobileControls();
@@ -3534,6 +3535,7 @@ class PlayState extends MusicBeatState
 			#if mobile
 			mobileControls.visible = true;
 			#end
+		kadeEngineWatermark.visible = false;
 		timeBarBG.visible = false;
 		timeBar.visible = false;
 		timeTxt.visible = false;
