@@ -4750,9 +4750,15 @@ class PlayState extends MusicBeatState
 
 				if (curBeat % 4 == 0)
 				{
-					curLight = FlxG.random.int(0, phillyLightsColors.length - 1, [curLight]);
-					phillyWindow.color = phillyLightsColors[curLight];
-					phillyWindow.alpha = 1;
+					phillyCityLights.forEach(function(light:BGSprite)
+					{
+						light.visible = false;
+					});
+
+					curLight = FlxG.random.int(0, phillyCityLights.length - 1, [curLight]);
+
+					phillyCityLights.members[curLight].visible = true;
+					phillyCityLights.members[curLight].alpha = 1;
 				}
 
 				if (curBeat % 8 == 4 && FlxG.random.bool(30) && !trainMoving && trainCooldown > 8)
@@ -4762,13 +4768,28 @@ class PlayState extends MusicBeatState
 				}
 		}*/
 
+		if (!paused && funnyJumpersAllowed && FlxG.random.bool(2.8) && !bullshitdone)
+		{
+			bgjump1();
+		}
+
+		if (!paused && funnyJumpersAllowed && FlxG.random.bool(2) && !bullshitdone2)
+		{
+			bgjump2();
+		}
+
+		if (!paused && funnyJumpersAllowed && FlxG.random.bool(2.4) && !bullshitdone3)
+		{
+			bgjump3();
+		}
+
 		if (curStage == 'spooky' && FlxG.random.bool(10) && curBeat > lightningStrikeBeat + lightningOffset)
 		{
 			lightningStrikeShit();
 		}
 		lastBeatHit = curBeat;
 
-		setOnLuas('curBeat', curBeat); //DAWGG?????
+		setOnLuas('curBeat', curBeat);
 		callOnLuas('onBeatHit', []);
 	}
 
