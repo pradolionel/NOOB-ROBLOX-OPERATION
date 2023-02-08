@@ -32,7 +32,7 @@ using StringTools;
 class Main extends Sprite
 {
 	var game = {
-		width: 1500, // test roblox
+		width: 1280, // WINDOW width
 		height: 720, // WINDOW height
 		initialState: TitleState, // initial game state
 		zoom: -1.0, // game state bounds
@@ -41,6 +41,7 @@ class Main extends Sprite
 		startFullscreen: false // if the game should start at fullscreen mode
 	};
 
+	public static var watermarks = true; // Whether to put Kade Engine liteartly anywhere
 	public static var fpsVar:FPS;
 
 	// You can pretty much ignore everything from here on - your code should go in your states.
