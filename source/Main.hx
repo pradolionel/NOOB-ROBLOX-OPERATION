@@ -32,7 +32,7 @@ using StringTools;
 class Main extends Sprite
 {
 	var game = {
-		width: 1320, // WINDOW width
+		width: 1500, // test roblox
 		height: 720, // WINDOW height
 		initialState: TitleState, // initial game state
 		zoom: -1.0, // game state bounds
