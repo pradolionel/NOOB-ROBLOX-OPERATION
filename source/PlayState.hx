@@ -135,6 +135,7 @@ class PlayState extends MusicBeatState
 	public var noteKillOffset:Float = 350;
 
 	public var playbackRate(default, set):Float = 1;
+	var kadeEngineWatermark:FlxText;
 
 	public var boyfriendGroup:FlxSpriteGroup;
 	public var dadGroup:FlxSpriteGroup;
@@ -276,8 +277,8 @@ class PlayState extends MusicBeatState
 	var foregroundSprites:FlxTypedGroup<BGSprite>;
 
 	public var songScore:Int = 0;
-	public var songHits:Int = 0;
-	public var songMisses:Int = 0;
+	//public var songHits:Int = 0;
+	//public var songMisses:Int = 0;
 	public var scoreTxt:FlxText;
 	var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
@@ -932,6 +933,15 @@ class PlayState extends MusicBeatState
 		add(healthBar);
 		healthBarBG.sprTracker = healthBar;
 
+		// Add Kade Engine watermark
+		kadeEngineWatermark = new FlxText(4,healthBarBG.y + 50,0,SONG.song + " - " + (storyDifficulty == 2 ? "Hard" : storyDifficulty == 1 ? "Normal" : "Easy") + (Main.watermarks ? " | KE " + MainMenuState.psychEngineVersion : ""), 16);
+		kadeEngineWatermark.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+		kadeEngineWatermark.scrollFactor.set();
+		add(kadeEngineWatermark);
+
+		if (FlxG.save.data.downscroll)
+			kadeEngineWatermark.y = FlxG.height * 0.9 + 45;
+			
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
 		iconP1.y = healthBar.y - 75;
 		iconP1.visible = !ClientPrefs.hideHud;
@@ -2071,9 +2081,9 @@ class PlayState extends MusicBeatState
 	public function updateScore(miss:Bool = false)
 	{
 		scoreTxt.text = 'Score: ' + songScore
-		+ ' | Misses: ' + songMisses
+		/*+ ' | Misses: ' + songMisses
 		+ ' | Rating: ' + ratingName
-		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
+		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');*/
 
 		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
 		{
@@ -3572,7 +3582,7 @@ class PlayState extends MusicBeatState
 			if (isStoryMode)
 			{
 				campaignScore += songScore;
-				campaignMisses += songMisses;
+				//campaignMisses += songMisses;
 
 				storyPlaylist.remove(storyPlaylist[0]);
 
@@ -3751,7 +3761,7 @@ class PlayState extends MusicBeatState
 			songScore += score;
 			if(!note.ratingDisabled)
 			{
-				songHits++;
+				//songHits++;
 				totalPlayed++;
 				RecalculateRating(false);
 			}
@@ -4136,7 +4146,7 @@ class PlayState extends MusicBeatState
 
 		//For testing purposes
 		//trace(daNote.missHealth);
-		songMisses++;
+		//songMisses++;
 		vocals.volume = 0;
 		if(!practiceMode) songScore -= 10;
 
@@ -4178,7 +4188,7 @@ class PlayState extends MusicBeatState
 
 			if(!practiceMode) songScore -= 10;
 			if(!endingSong) {
-				songMisses++;
+				//songMisses++;
 			}
 			totalPlayed++;
 			RecalculateRating(true);
@@ -4902,8 +4912,8 @@ class PlayState extends MusicBeatState
 	public var ratingFC:String;
 	public function RecalculateRating(badHit:Bool = false) {
 		setOnLuas('score', songScore);
-		setOnLuas('misses', songMisses);
-		setOnLuas('hits', songHits);
+		//setOnLuas('misses', songMisses);
+		//setOnLuas('hits', songHits);
 
 		var ret:Dynamic = callOnLuas('onRecalculateRating', [], false);
 		if(ret != FunkinLua.Function_Stop)
@@ -4934,7 +4944,7 @@ class PlayState extends MusicBeatState
 				}
 			}
 
-			// Rating FC
+			/* Rating FC
 			ratingFC = "";
 			if (sicks > 0) ratingFC = "SFC";
 			if (goods > 0) ratingFC = "GFC";
@@ -4946,7 +4956,7 @@ class PlayState extends MusicBeatState
 		setOnLuas('rating', ratingPercent);
 		setOnLuas('ratingName', ratingName);
 		setOnLuas('ratingFC', ratingFC);
-	}
+	}*/
 
 	#if ACHIEVEMENTS_ALLOWED
 	private function checkForAchievement(achievesToCheck:Array<String> = null):String
@@ -4961,10 +4971,10 @@ class PlayState extends MusicBeatState
 				
 				if (achievementName.contains(WeekData.getWeekFileName()) && achievementName.endsWith('nomiss')) // any FC achievements, name should be "weekFileName_nomiss", e.g: "weekd_nomiss";
 				{
-					if(isStoryMode && campaignMisses + songMisses < 1 && CoolUtil.difficultyString() == 'HARD'
+					/*if(isStoryMode && campaignMisses + songMisses < 1 && CoolUtil.difficultyString() == 'HARD'
 						&& storyPlaylist.length <= 1 && !changedDifficulty && !usedPractice)
 						unlock = true;
-				}
+				}*/
 				switch(achievementName)
 				{
 					case 'ur_bad':
