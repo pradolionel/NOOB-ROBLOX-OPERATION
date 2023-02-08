@@ -4429,12 +4429,12 @@ class PlayState extends MusicBeatState
 	var trainFinishing:Bool = false;
 	var trainCooldown:Int = 0;
 
-	function trainStart():Void
+	/*function trainStart():Void
 	{
 		trainMoving = true;
 		if (!trainSound.playing)
 			trainSound.play(true);
-	}
+	}*/
 
 	var startedMoving:Bool = false;
 
