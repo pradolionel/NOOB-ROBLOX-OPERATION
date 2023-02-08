@@ -30,7 +30,7 @@
 	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" vsync="false"/>
 
 	<!--Mobile-specific-->
-	<window if="mobile" orientation="landscape" fullscreen="true" width="1340" height="720" resizable="false"/>
+	<window if="mobile" orientation="landscape" fullscreen="true" resizable="false"/>
 
 	<!--Switch-specific-->
 	<window if="switch" orientation="landscape" fullscreen="true" width="0" height="0" resizable="true" />
@@ -45,7 +45,8 @@
 	
 	<assets path="mobile" rename="assets/mobile" if="mobile" /> <!-- to not have the mobile assets in another builds -saw -->
 	
-	<!-- PSYCH ENGINE CUSTOMIZATION --> 
+	<!-- PSYCH ENGINE CUSTOMIZATION -->
+	<define name="MODS_ALLOWED" if="desktop || mobile" />
 	<define name="LUA_ALLOWED" if="desktop || mobile" />
 	<define name="ACHIEVEMENTS_ALLOWED" />
 	<define name="VIDEOS_ALLOWED" if="web || windows" unless="32bits"/>
@@ -87,7 +88,9 @@
 	<assets path="assets/shared"        library="shared"        exclude="*.mp3" unless="web"/>
 	<assets path="assets/week0"         library="week0"         exclude="*.ogg" if="web"/>
 	<assets path="assets/week0"         library="week0"         exclude="*.mp3" unless="web"/>
-
+	
+	<section if="MODS_ALLOWED">
+		<assets path='example_mods' rename='mods' embed='false'/>
 	</section>
 	<assets path='art/readme.txt' rename='do NOT readme.txt' />
 	<!-- <template path='mods' /> -->
