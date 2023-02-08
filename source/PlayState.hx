@@ -2081,7 +2081,7 @@ class PlayState extends MusicBeatState
 	public function updateScore(miss:Bool = false)
 	{
 		scoreTxt.text = 'Score: ' + songScore
-		+ ' | Misses: ' + songMisses
+		//+ ' | Misses: ' + songMisses
 		+ ' | Rating: ' + ratingName
 		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
 
@@ -3582,7 +3582,7 @@ class PlayState extends MusicBeatState
 			if (isStoryMode)
 			{
 				campaignScore += songScore;
-				campaignMisses += songMisses;
+				//campaignMisses += songMisses;
 
 				storyPlaylist.remove(storyPlaylist[0]);
 
@@ -4146,7 +4146,7 @@ class PlayState extends MusicBeatState
 
 		//For testing purposes
 		//trace(daNote.missHealth);
-		songMisses++;
+		//songMisses++;
 		vocals.volume = 0;
 		if(!practiceMode) songScore -= 10;
 
@@ -4188,7 +4188,7 @@ class PlayState extends MusicBeatState
 
 			if(!practiceMode) songScore -= 10;
 			if(!endingSong) {
-				songMisses++;
+				//songMisses++;
 			}
 			totalPlayed++;
 			RecalculateRating(true);
@@ -4949,8 +4949,8 @@ class PlayState extends MusicBeatState
 			if (sicks > 0) ratingFC = "SFC";
 			if (goods > 0) ratingFC = "GFC";
 			if (bads > 0 || shits > 0) ratingFC = "FC";
-			if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
-			else if (songMisses >= 10) ratingFC = "Clear";
+			//if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
+			//else if (songMisses >= 10) ratingFC = "Clear";
 		}
 		updateScore(badHit); // score will only update after rating is calculated, if it's a badHit, it shouldn't bounce -Ghost
 		setOnLuas('rating', ratingPercent);
