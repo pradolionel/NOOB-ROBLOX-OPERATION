@@ -4469,7 +4469,7 @@ class PlayState extends MusicBeatState
 	}
 
 	function trainReset():Void
-	{*/
+	{
 		if(gf != null)
 		{
 			gf.danced = false; //Sets head to the correct position once the animation ends
@@ -4483,7 +4483,7 @@ class PlayState extends MusicBeatState
 		trainCars = 8;
 		trainFinishing = false;
 		startedMoving = false;
-	}
+	}*/
 
 	function lightningStrikeShit():Void
 	{
