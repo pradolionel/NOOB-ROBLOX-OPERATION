@@ -4434,7 +4434,7 @@ class PlayState extends MusicBeatState
 		trainMoving = true;
 		if (!trainSound.playing)
 			trainSound.play(true);
-	}*/
+	}
 
 	var startedMoving:Bool = false;
 
@@ -4450,7 +4450,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		/*if (startedMoving)
+		if (startedMoving)
 		{
 			phillyTrain.x -= 400;
 
@@ -4753,14 +4753,14 @@ class PlayState extends MusicBeatState
 					curLight = FlxG.random.int(0, phillyLightsColors.length - 1, [curLight]);
 					phillyWindow.color = phillyLightsColors[curLight];
 					phillyWindow.alpha = 1;
-				}*/
+				}
 
 				if (curBeat % 8 == 4 && FlxG.random.bool(30) && !trainMoving && trainCooldown > 8)
 				{
 					trainCooldown = FlxG.random.int(-4, 0);
 					trainStart();
 				}
-		}
+		}*/
 
 		if (curStage == 'spooky' && FlxG.random.bool(10) && curBeat > lightningStrikeBeat + lightningOffset)
 		{
