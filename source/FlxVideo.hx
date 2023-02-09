@@ -3,19 +3,19 @@ import openfl.net.NetConnection;
 import openfl.net.NetStream;
 import openfl.events.NetStatusEvent;
 import openfl.media.Video;
+#elseif android
+import extension.videoview.VideoView;
+import android.AndroidTools;
 #else
 import openfl.events.Event;
 import vlc.VlcBitmap;
 #end
-import flixel.util.FlxTimer;
 import flixel.FlxBasic;
 import flixel.FlxG;
 
 class FlxVideo extends FlxBasic {
 	#if VIDEOS_ALLOWED
 	public var finishCallback:Void->Void = null;
-
-	var video_ended:Bool = false;
 	
 	#if desktop
 	public static var vlcBitmap:VlcBitmap;
@@ -49,6 +49,15 @@ class FlxVideo extends FlxBasic {
 		});
 		netStream.play(name);
 
+	        #elseif android
+
+                VideoView.playVideo(AndroidTools.getFileUrl(name));
+                VideoView.onCompletion = function(){
+		        if (finishCallback != null){
+			        finishCallback();
+		        }
+                }             
+
 		#elseif desktop
 		// by Polybius, check out PolyEngine! https://github.com/polybiusproxy/PolyEngine
 
@@ -68,13 +77,6 @@ class FlxVideo extends FlxBasic {
 		FlxG.addChildBelowMouse(vlcBitmap);
 		vlcBitmap.play(checkFile(name));
 		#end
-	
-		//Can someone tell me why the update() don't work? -EstoyAburridow#3105
-		new FlxTimer().start(0.01, function(_) {
-			if (PlayerSettings.player1.controls.BACK && !video_ended) {
-				onVLCComplete();
-			}
-		}, 0);
 	}
 
 	#if desktop
@@ -114,8 +116,6 @@ class FlxVideo extends FlxBasic {
 
 	public function onVLCComplete()
 	{
-		video_ended = true;
-
 		vlcBitmap.stop();
 
 		// Clean player, just in case!
@@ -127,7 +127,9 @@ class FlxVideo extends FlxBasic {
 		}
 
 		if (finishCallback != null)
+		{
 			finishCallback();
+		}
 	}
 
 	
