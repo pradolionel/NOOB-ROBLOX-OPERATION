@@ -930,6 +930,7 @@ class PlayState extends MusicBeatState
 		// healthBar
 		healthBar.visible = !ClientPrefs.hideHud;
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
+		healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
 		add(healthBar);
 		healthBarBG.sprTracker = healthBar;
 
@@ -960,6 +961,7 @@ class PlayState extends MusicBeatState
 		botplayTxt = new FlxText(healthBarBG.x + healthBarBG.width / 2 - 75, healthBarBG.y + (FlxG.save.data.downscroll ? 100 : -100), 0, "BOTPLAY", 20);
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 42, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
+		botplayTxt.visible = cpuControlled;
 		add(botplayTxt);
 
 		strumLineNotes.cameras = [camHUD];
