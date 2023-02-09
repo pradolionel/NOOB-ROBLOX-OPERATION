@@ -2074,7 +2074,7 @@ class PlayState extends MusicBeatState
 	{
 		scoreTxt.text = 'Score: ' + songScore
 		//+ ' | Misses: ' + songMisses
-		//+ ' | Rating: ' + ratingName
+		+ ' | Rating: ' + ratingName
 		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
 
 		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
@@ -4901,7 +4901,7 @@ class PlayState extends MusicBeatState
 	}
 
 	public var ratingName:String = '?';
-	//public var ratingPercent:Float;
+	public var ratingPercent:Float;
 	public var ratingFC:String;
 	public function RecalculateRating(badHit:Bool = false) {
 		setOnLuas('score', songScore);
@@ -4946,7 +4946,7 @@ class PlayState extends MusicBeatState
 			//else if (songMisses >= 10) ratingFC = "Clear";
 		}
 		updateScore(badHit); // score will only update after rating is calculated, if it's a badHit, it shouldn't bounce -Ghost
-		//setOnLuas('rating', ratingPercent);
+		setOnLuas('rating', ratingPercent);
 		setOnLuas('ratingName', ratingName);
 		setOnLuas('ratingFC', ratingFC);
 	}
