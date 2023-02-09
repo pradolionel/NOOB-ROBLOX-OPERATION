@@ -196,6 +196,10 @@ class PlayState extends MusicBeatState
 	public var goods:Int = 0;
 	public var bads:Int = 0;
 	public var shits:Int = 0;
+	
+	public static var rep:Replay;
+	public static var loadRep:Bool = false;
+
 
 	private var generatedMusic:Bool = false;
 	public var endingSong:Bool = false;
@@ -280,7 +284,7 @@ class PlayState extends MusicBeatState
 	//public var songHits:Int = 0;
 	//public var songMisses:Int = 0;
 	public var scoreTxt:FlxText;
-	var timeTxt:FlxText;
+	//var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
 
 	public static var campaignScore:Int = 0;
@@ -977,6 +981,8 @@ class PlayState extends MusicBeatState
 		timeTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
 		kadeEngineWatermark.cameras = [camHUD];
+		if (loadRep)
+		replayTxt.cameras = [camHUD];
 		
 		#if mobile
 		addMobileControls();
