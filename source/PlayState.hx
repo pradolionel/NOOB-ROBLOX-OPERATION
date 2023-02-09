@@ -197,10 +197,6 @@ class PlayState extends MusicBeatState
 	public var bads:Int = 0;
 	public var shits:Int = 0;
 	
-	public static var rep:Replay;
-	public static var loadRep:Bool = false;
-
-
 	private var generatedMusic:Bool = false;
 	public var endingSong:Bool = false;
 	public var startingSong:Bool = false;
@@ -964,8 +960,7 @@ class PlayState extends MusicBeatState
 		botplayTxt = new FlxText(healthBarBG.x + healthBarBG.width / 2 - 75, healthBarBG.y + (FlxG.save.data.downscroll ? 100 : -100), 0, "BOTPLAY", 20);
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 42, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
-		
-		if(FlxG.save.data.botplay && !loadRep) add(botplayTxt);
+		add(botplayTxt);
 
 		strumLineNotes.cameras = [camHUD];
 		grpNoteSplashes.cameras = [camHUD];
@@ -981,8 +976,6 @@ class PlayState extends MusicBeatState
 		timeTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
 		kadeEngineWatermark.cameras = [camHUD];
-		if (loadRep)
-		replayTxt.cameras = [camHUD];
 		
 		#if mobile
 		addMobileControls();
