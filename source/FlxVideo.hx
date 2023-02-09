@@ -5,7 +5,6 @@ import openfl.events.NetStatusEvent;
 import openfl.media.Video;
 #elseif android
 import extension.videoview.VideoView;
-import android.AndroidTools;
 #else
 import openfl.events.Event;
 import vlc.VlcBitmap;
