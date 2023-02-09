@@ -153,7 +153,7 @@ class FunkinLua {
 		set('curDecStep', 0);
 
 		set('score', 0);
-		set('misses', 0);
+		set('combo breaks', 0);
 		set('hits', 0);
 
 		set('rating', 0);
@@ -1339,11 +1339,11 @@ class FunkinLua {
 			PlayState.instance.RecalculateRating();
 		});
 		Lua_helper.add_callback(lua, "addMisses", function(value:Int = 0) {
-			//PlayState.instance.songMisses += value;
+			PlayState.instance.songMisses += value;
 			PlayState.instance.RecalculateRating();
 		});
 		Lua_helper.add_callback(lua, "addHits", function(value:Int = 0) {
-			//PlayState.instance.songHits += value;
+			PlayState.instance.songHits += value;
 			PlayState.instance.RecalculateRating();
 		});
 		Lua_helper.add_callback(lua, "setScore", function(value:Int = 0) {
@@ -1351,21 +1351,21 @@ class FunkinLua {
 			PlayState.instance.RecalculateRating();
 		});
 		Lua_helper.add_callback(lua, "setMisses", function(value:Int = 0) {
-			//PlayState.instance.songMisses = value;
+			PlayState.instance.songMisses = value;
 			PlayState.instance.RecalculateRating();
 		});
 		Lua_helper.add_callback(lua, "setHits", function(value:Int = 0) {
-			//PlayState.instance.songHits = value;
+			PlayState.instance.songHits = value;
 			PlayState.instance.RecalculateRating();
 		});
 		Lua_helper.add_callback(lua, "getScore", function() {
 			return PlayState.instance.songScore;
 		});
 		Lua_helper.add_callback(lua, "getMisses", function() {
-			//return PlayState.instance.songMisses;
+			return PlayState.instance.songMisses;
 		});
 		Lua_helper.add_callback(lua, "getHits", function() {
-			//return PlayState.instance.songHits;
+			return PlayState.instance.songHits;
 		});
 
 		Lua_helper.add_callback(lua, "setHealth", function(value:Float = 0) {

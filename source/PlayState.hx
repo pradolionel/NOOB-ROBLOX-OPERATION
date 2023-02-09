@@ -277,14 +277,14 @@ class PlayState extends MusicBeatState
 	var foregroundSprites:FlxTypedGroup<BGSprite>;
 
 	public var songScore:Int = 0;
-	//public var songHits:Int = 0;
-	//public var songMisses:Int = 0;
+	public var songHits:Int = 0;
+	public var songMisses:Int = 0;
 	public var scoreTxt:FlxText;
 	var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
 
 	public static var campaignScore:Int = 0;
-	//public static var campaignMisses:Int = 0;
+	public static var campaignMisses:Int = 0;
 	public static var seenCutscene:Bool = false;
 	public static var deathCounter:Int = 0;
 
@@ -2076,7 +2076,7 @@ class PlayState extends MusicBeatState
 	public function updateScore(miss:Bool = false)
 	{
 		scoreTxt.text = 'Score: ' + songScore
-		//+ ' | Misses: ' + songMisses
+		+ ' | Combo Breaks: ' + songMisses
 		+ ' | Rating: ' + ratingName
 		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
 
@@ -3578,7 +3578,7 @@ class PlayState extends MusicBeatState
 			if (isStoryMode)
 			{
 				campaignScore += songScore;
-				//campaignMisses += songMisses;
+				campaignMisses += songMisses;
 
 				storyPlaylist.remove(storyPlaylist[0]);
 
@@ -4142,7 +4142,7 @@ class PlayState extends MusicBeatState
 
 		//For testing purposes
 		//trace(daNote.missHealth);
-		//songMisses++;
+		songMisses++;
 		vocals.volume = 0;
 		if(!practiceMode) songScore -= 10;
 
@@ -4184,7 +4184,7 @@ class PlayState extends MusicBeatState
 
 			if(!practiceMode) songScore -= 10;
 			if(!endingSong) {
-				//songMisses++;
+				songMisses++;
 			}
 			totalPlayed++;
 			RecalculateRating(true);
@@ -4908,8 +4908,8 @@ class PlayState extends MusicBeatState
 	public var ratingFC:String;
 	public function RecalculateRating(badHit:Bool = false) {
 		setOnLuas('score', songScore);
-		//setOnLuas('misses', songMisses);
-		//setOnLuas('hits', songHits);
+		setOnLuas('misses', songMisses);
+		setOnLuas('hits', songHits);
 
 		var ret:Dynamic = callOnLuas('onRecalculateRating', [], false);
 		if(ret != FunkinLua.Function_Stop)
@@ -4945,8 +4945,8 @@ class PlayState extends MusicBeatState
 			if (sicks > 0) ratingFC = "SFC";
 			if (goods > 0) ratingFC = "GFC";
 			if (bads > 0 || shits > 0) ratingFC = "FC";
-			//if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
-			//else if (songMisses >= 10) ratingFC = "Clear";
+			if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
+			else if (songMisses >= 10) ratingFC = "Clear";
 		}
 		updateScore(badHit); // score will only update after rating is calculated, if it's a badHit, it shouldn't bounce -Ghost
 		setOnLuas('rating', ratingPercent);
@@ -4967,8 +4967,8 @@ class PlayState extends MusicBeatState
 				
 				if (achievementName.contains(WeekData.getWeekFileName()) && achievementName.endsWith('nomiss')) // any FC achievements, name should be "weekFileName_nomiss", e.g: "weekd_nomiss";
 				{
-					/*if(isStoryMode && campaignMisses + songMisses < 1 && CoolUtil.difficultyString() == 'HARD'
-						&& storyPlaylist.length <= 1 && !changedDifficulty && !usedPractice)*/
+					if(isStoryMode && campaignMisses + songMisses < 1 && CoolUtil.difficultyString() == 'HARD'
+						&& storyPlaylist.length <= 1 && !changedDifficulty && !usedPractice)
 						unlock = true;
 				}
 				switch(achievementName)
