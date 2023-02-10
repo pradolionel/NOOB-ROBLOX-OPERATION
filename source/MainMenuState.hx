@@ -132,7 +132,6 @@ class MainMenuState extends MusicBeatState
 					}});
 			else
 				menuItem.y = 60 + (i * 160);
-				spr.y = 60 + (i * 160);
 		}
 
 		firstStart = false;
@@ -286,7 +285,7 @@ class MainMenuState extends MusicBeatState
 		{
 			spr.animation.play('idle');
 			spr.updateHitbox();
-			
+			spr.y = 60 + (i * 160);
 						if (spr.ID == curSelected && finishedFunnyMove)
 			{
 				spr.animation.play('selected');
