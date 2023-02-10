@@ -148,7 +148,8 @@ class MainMenuState extends MusicBeatState
 			}
 		}
 		#end
-L		#if mobile
+		
+		#if mobile
 		addVirtualPad(UP_DOWN, A_B);
 		#end
 
