@@ -25,12 +25,14 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-    public static var nightly:String = "";
-
-    public static var kadeEngineVer:String = "1.5.2" + nightly;
-    public static var gameVer:String = "0.2.7.1";
+	
 	public static var curSelected:Int = 0;
+	
+	public static var nightly:String = "";
 
+	public static var kadeEngineVer:String = "1.5.2" + nightly;
+	public static var gameVer:String = "0.2.7.1";
+	
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	private var camGame:FlxCamera;
 	private var camAchievement:FlxCamera;
@@ -38,18 +40,13 @@ class MainMenuState extends MusicBeatState
 	var optionShit:Array<String> = [
 		'story_mode',
 		'freeplay',
-		'donate',
+		#if !switch 'donate', #end
 		'options'
 	];
-	
-	var newGaming:FlxText;
-	var newGaming2:FlxText;
-	public static var firstStart:Bool = true;
-	
+
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
 	var debugKeys:Array<FlxKey>;
-	public static var finishedFunnyMove:Bool = false;
 
 	override function create()
 	{
@@ -88,7 +85,7 @@ class MainMenuState extends MusicBeatState
 
 		camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
-		
+
 		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
 		magenta.scrollFactor.set(0, yScroll);
 		magenta.setGraphicSize(Std.int(magenta.width * 1.175));
@@ -122,22 +119,19 @@ class MainMenuState extends MusicBeatState
 			menuItem.ID = i;
 			menuItem.screenCenter(X);
 			menuItems.add(menuItem);
-			menuItem.scrollFactor.set();
-			menuItem.antialiasing = true;
-			if (firstStart)
-				FlxTween.tween(menuItem,{0 + (i * 140) + offset},1 + (i * 0.60) ,{ease: FlxEase.expoInOut, onComplete: function(flxTween:FlxTween) 
-					{ 
-						finishedFunnyMove = true; 
-						changeItem();
-					}});
+			var scr:Float = (optionShit.length - 4) * 0.135;
+			if(optionShit.length < 6) scr = 0;
+M lm en mi cama bjj en bb}bbjbbbjbbbbbjbbbbbbjbbbbbjbbjbbbbbjjj			menuItem.scrollFactor.set(0, scr);
+			menuItem.antialiasing = ClientPrefs.globalAntialiasing;
+			//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
+			menuItem.updateHitbox();
 		}
 
-		firstStart = false;
-		
 		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, gameVer +  (Main.watermarks ? " FNF - " + " Kade Engine " + kadeEngineVer : ""), 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
+
 		// NG.core.calls.event.logEvent('swag').send();
 
 		changeItem();
@@ -154,8 +148,7 @@ class MainMenuState extends MusicBeatState
 			}
 		}
 		#end
-		
-		#if mobile
+L		#if mobile
 		addVirtualPad(UP_DOWN, A_B);
 		#end
 
@@ -208,7 +201,7 @@ class MainMenuState extends MusicBeatState
 			{
 				if (optionShit[curSelected] == 'donate')
 				{
-					CoolUtil.browserLoad('https://www.kickstarter.com/projects/funkin/friday-night-funkin-the-full-ass-game');
+					CoolUtil.browserLoad('https://ninja-muffin24.itch.io/funkin');
 				}
 				else
 				{
@@ -241,6 +234,14 @@ class MainMenuState extends MusicBeatState
 										MusicBeatState.switchState(new StoryMenuState());
 									case 'freeplay':
 										MusicBeatState.switchState(new FreeplayState());
+									#if desktop
+									case 'mods':
+										MusicBeatState.switchState(new ModsMenuState());
+									#end
+									case 'awards':
+										MusicBeatState.switchState(new AchievementsMenuState());
+									case 'credits':
+										MusicBeatState.switchState(new CreditsState());
 									case 'options':
 										LoadingState.loadAndSwitchState(new options.OptionsState());
 								}
@@ -265,12 +266,10 @@ class MainMenuState extends MusicBeatState
 			spr.screenCenter(X);
 		});
 	}
-	
-		function changeItem(huh:Int = 0)
+
+	function changeItem(huh:Int = 0)
 	{
-		if (finishedFunnyMove)
-		{
-			curSelected += huh;
+		curSelected += huh;
 
 		if (curSelected >= menuItems.length)
 			curSelected = 0;
@@ -281,18 +280,17 @@ class MainMenuState extends MusicBeatState
 		{
 			spr.animation.play('idle');
 			spr.updateHitbox();
-						if (spr.ID == curSelected && finishedFunnyMove)
+
+			if (spr.ID == curSelected)
 			{
 				spr.animation.play('selected');
 				var add:Float = 0;
 				if(menuItems.length > 4) {
 					add = menuItems.length * 8;
 				}
-				camFollow.setPosition(spr.getGraphicMidpoint().x, spr.getGraphicMidpoint().y);
+				camFollow.setPosition(spr.getGraphicMidpoint().x, spr.getGraphicMidpoint().y - add);
+				spr.centerOffsets();
 			}
-
-			spr.updateHitbox();
 		});
 	}
-}
 }
