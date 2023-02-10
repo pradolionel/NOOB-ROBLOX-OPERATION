@@ -134,9 +134,7 @@ class MainMenuState extends MusicBeatState
 				menuItem.y = 60 + (i * 160);
 		}
 
-		firstStart = false;
 
-		FlxG.camera.follow(camFollow, null, 0.60 * (60 / FlxG.save.data.fpsCap));
 
 		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, gameVer +  (Main.watermarks ? " FNF - " + " Kade Engine " + kadeEngineVer : ""), 12);
 		versionShit.scrollFactor.set();
