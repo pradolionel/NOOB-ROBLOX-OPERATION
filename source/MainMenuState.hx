@@ -38,14 +38,18 @@ class MainMenuState extends MusicBeatState
 	var optionShit:Array<String> = [
 		'story_mode',
 		'freeplay',
-		#if !switch 'donate', #end
+		'donate',
 		'options'
 	];
-
+	
+	var newGaming:FlxText;
+	var newGaming2:FlxText;
+	public static var firstStart:Bool = true;
+	
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
-	var camFollowPos:FlxObject;
 	var debugKeys:Array<FlxKey>;
+	public static var finishedFunnyMove:Bool = false;
 
 	override function create()
 	{
@@ -83,10 +87,8 @@ class MainMenuState extends MusicBeatState
 		add(bg);
 
 		camFollow = new FlxObject(0, 0, 1, 1);
-		camFollowPos = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
-		add(camFollowPos);
-
+		
 		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
 		magenta.scrollFactor.set(0, yScroll);
 		magenta.setGraphicSize(Std.int(magenta.width * 1.175));
@@ -120,15 +122,21 @@ class MainMenuState extends MusicBeatState
 			menuItem.ID = i;
 			menuItem.screenCenter(X);
 			menuItems.add(menuItem);
-			var scr:Float = (optionShit.length - 4) * 0.135;
-			if(optionShit.length < 6) scr = 0;
-			menuItem.scrollFactor.set(0, scr);
-			menuItem.antialiasing = ClientPrefs.globalAntialiasing;
-			//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
-			menuItem.updateHitbox();
+			menuItem.scrollFactor.set();
+			menuItem.antialiasing = true;
+			if (firstStart)
+				FlxTween.tween(menuItem,{y: 60 + (i * 160)},1 + (i * 0.25) ,{ease: FlxEase.expoInOut, onComplete: function(flxTween:FlxTween) 
+					{ 
+						finishedFunnyMove = true; 
+						changeItem();
+					}});
+			else
+				menuItem.y = 60 + (i * 160);
 		}
 
-		FlxG.camera.follow(camFollowPos, null, 1);
+		firstStart = false;
+
+		FlxG.camera.follow(camFollow, null, 0.60 * (60 / FlxG.save.data.fpsCap));
 
 		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, gameVer +  (Main.watermarks ? " FNF - " + " Kade Engine " + kadeEngineVer : ""), 12);
 		versionShit.scrollFactor.set();
@@ -178,7 +186,6 @@ class MainMenuState extends MusicBeatState
 		}
 
 		var lerpVal:Float = CoolUtil.boundTo(elapsed * 7.5, 0, 1);
-		camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
 
 		if (!selectedSomethin)
 		{
@@ -205,7 +212,7 @@ class MainMenuState extends MusicBeatState
 			{
 				if (optionShit[curSelected] == 'donate')
 				{
-					CoolUtil.browserLoad('https://ninja-muffin24.itch.io/funkin');
+					CoolUtil.browserLoad('https://www.kickstarter.com/projects/funkin/friday-night-funkin-the-full-ass-game');
 				}
 				else
 				{
@@ -238,14 +245,6 @@ class MainMenuState extends MusicBeatState
 										MusicBeatState.switchState(new StoryMenuState());
 									case 'freeplay':
 										MusicBeatState.switchState(new FreeplayState());
-									#if desktop
-									case 'mods':
-										MusicBeatState.switchState(new ModsMenuState());
-									#end
-									case 'awards':
-										MusicBeatState.switchState(new AchievementsMenuState());
-									case 'credits':
-										MusicBeatState.switchState(new CreditsState());
 									case 'options':
 										LoadingState.loadAndSwitchState(new options.OptionsState());
 								}
@@ -270,10 +269,12 @@ class MainMenuState extends MusicBeatState
 			spr.screenCenter(X);
 		});
 	}
-
-	function changeItem(huh:Int = 0)
+	
+		function changeItem(huh:Int = 0)
 	{
-		curSelected += huh;
+		if (finishedFunnyMove)
+		{
+			curSelected += huh;
 
 		if (curSelected >= menuItems.length)
 			curSelected = 0;
@@ -284,8 +285,8 @@ class MainMenuState extends MusicBeatState
 		{
 			spr.animation.play('idle');
 			spr.updateHitbox();
-
-			if (spr.ID == curSelected)
+			
+						if (spr.ID == curSelected && finishedFunnyMove)
 			{
 				spr.animation.play('selected');
 				var add:Float = 0;
